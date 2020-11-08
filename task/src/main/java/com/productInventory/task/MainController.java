@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.*;
 public class MainController {
     @Autowired
     private ProductRepository productRepository;
-    //private ProductService productService;
+
+    @GetMapping("/all-products")
+    public List<Product> getProducts() {
+        return productRepository.findAll();
+    }
 
     @PostMapping("/add-product")
     public Product addProduct(@RequestBody Product product) {
         return productRepository.save(product);
-        // return productService.addProduct(product);
     }
 
     @GetMapping("/search-product")
@@ -26,20 +29,23 @@ public class MainController {
                 result.add(p);
 
         return result;
-        //return productService.searchProducts(search);
     }
 
     @PutMapping("/update-product/{id}")
     public Product updateProduct(@PathVariable(value = "id") long id, @RequestBody Product product) {
+        if (!productRepository.findById(id).isPresent())
+            throw new ProductNotFoundException("There is no product with such id");
+
         product.setId(id);
         return productRepository.save(product);
-        //return productService.updateProduct(id, product);
     }
 
     @DeleteMapping("/remove-product/{id}")
     public void removeProduct(@PathVariable(value = "id") long id) {
+        if (!productRepository.findById(id).isPresent())
+            throw new ProductNotFoundException("There is no product with such id");
+
         productRepository.deleteById(id);
-        //productService.removeProduct(id);
     }
 
     @GetMapping("/leftovers")
@@ -51,6 +57,5 @@ public class MainController {
                 result.add(p);
 
         return result;
-        //return productService.getLeftovers();
     }
 }
