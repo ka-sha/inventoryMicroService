@@ -13,6 +13,11 @@ public class MainController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @GetMapping("/")
+    public String helloPage() {
+        return "Hello guys!";
+    }
+
     @GetMapping("/all-products")
     public List<Product> getProducts() {
         return productRepository.findAll();
