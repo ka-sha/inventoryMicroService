@@ -1,7 +1,10 @@
-package com.inventoryMicroService;
+package com.inventoryMicroService.controllers;
 
 import java.util.*;
 
+import com.inventoryMicroService.Product;
+import com.inventoryMicroService.ProductNotFoundException;
+import com.inventoryMicroService.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.*;
 import org.springframework.web.bind.annotation.*;
