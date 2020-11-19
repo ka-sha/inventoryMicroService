@@ -3,12 +3,15 @@ package com.inventoryMicroService;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class MainController {
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @GetMapping("/all-products")
     public List<Product> getProducts() {
@@ -50,12 +53,9 @@ public class MainController {
 
     @GetMapping("/leftovers")
     public List<Product> getLeftovers() {
-        List<Product> result = new ArrayList<>();
-
-        for (Product p : productRepository.findAll())
-            if (p.getQuantity() <= 5)
-                result.add(p);
-
-        return result;
+        String sql = "SELECT id, name, brand, price, quantity " +
+                "FROM product " +
+                "WHERE quantity <= 5";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Product>(Product.class));
     }
 }
