@@ -1,4 +1,4 @@
-package com.productInventory.task;
+package com.inventoryMicroService;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package com.productInventory.task;
+package com.inventoryMicroService;
 
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;

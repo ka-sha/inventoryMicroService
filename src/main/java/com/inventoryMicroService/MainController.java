@@ -1,4 +1,4 @@
-package com.productInventory.task;
+package com.inventoryMicroService;
 
 import java.util.*;
 

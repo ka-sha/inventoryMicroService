@@ -1,4 +1,4 @@
-package com.productInventory.task;
+package com.inventoryMicroService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
