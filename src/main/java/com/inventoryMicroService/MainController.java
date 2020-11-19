@@ -25,13 +25,20 @@ public class MainController {
 
     @GetMapping("/search-product")
     public List<Product> searchProduct(@RequestParam(value = "search") String search) {
-        List<Product> result = new ArrayList<>();
+        /*List<Product> result = new ArrayList<>();
 
         for (Product p : productRepository.findAll())
             if (search.equalsIgnoreCase(p.getName()) || search.equalsIgnoreCase(p.getBrand()))
                 result.add(p);
 
-        return result;
+        return result;*/
+        search = search.toLowerCase();
+        String sql = "SELECT * " +
+                "FROM product " +
+                "WHERE LOWER(brand) = ? " +
+                "OR LOWER(name) = ?";
+
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Product.class), search, search);
     }
 
     @PutMapping("/update-product/{id}")
@@ -53,9 +60,10 @@ public class MainController {
 
     @GetMapping("/leftovers")
     public List<Product> getLeftovers() {
-        String sql = "SELECT id, name, brand, price, quantity " +
+        String sql = "SELECT * " +
                 "FROM product " +
                 "WHERE quantity <= 5";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Product>(Product.class));
+
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Product.class));
     }
 }
