@@ -25,13 +25,6 @@ public class MainController {
 
     @GetMapping("/search-product")
     public List<Product> searchProduct(@RequestParam(value = "search") String search) {
-        /*List<Product> result = new ArrayList<>();
-
-        for (Product p : productRepository.findAll())
-            if (search.equalsIgnoreCase(p.getName()) || search.equalsIgnoreCase(p.getBrand()))
-                result.add(p);
-
-        return result;*/
         search = search.toLowerCase();
         String sql = "SELECT * " +
                 "FROM product " +
